@@ -1,0 +1,64 @@
+<core:FragmentDefinition
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:t="sap.ui.table"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:layout="sap.ui.layout"
+    xmlns:core="sap.ui.core">
+	<Panel width="auto" class="sapUiResponsiveMargin">
+		<headerToolbar>
+			<Toolbar height="3rem">
+				<Title text="{i18n>CHARTS_TITLE_AVAILABILITY}"/>
+			</Toolbar>
+		</headerToolbar>
+		<content
+			direction="Column"
+			class="sapUiLargeMargin"
+			>
+			<VBox class='ct-chart ct-octave chartStat'></VBox>
+		</content>
+	</Panel>
+	
+    <Panel width="auto" class="sapUiResponsiveMargin">
+		<headerToolbar>
+			<Toolbar height="3rem">
+				<Title text="{i18n>CHARTS_TITLE_AVERAGE_PROCESSING_TIME}"/>
+			</Toolbar>
+		</headerToolbar>
+		<content
+			direction="Column"
+			class="sapUiLargeMargin"
+			>
+			<VBox>
+				<Select change="onTimeRangeSelectChange"  name= "AVGSelect"
+					 items="{selectRangeModel>/dateRange}" selectedKey="0">
+					<core:Item key="{selectRangeModel>value}" text="{selectRangeModel>name}" />
+				</Select>
+			</VBox>
+            <VBox class='ct-chart ct-octave chartAVG'></VBox>
+         </content>
+	</Panel>
+
+	<Panel width="auto" class="sapUiResponsiveMargin">
+		<headerToolbar>
+			<Toolbar height="3rem">
+				<Title text="{i18n>CHARTS_TITLE_LOAD_INFORMATION}"/>
+			</Toolbar>
+		</headerToolbar>
+		<content
+			direction="Column"
+			class="sapUiLargeMargin"
+			>
+			<VBox>
+				<Select change="onTimeRangeSelectChange"  name="inProcessChangeSelect"
+					 items="{selectRangeModel>/dateRange}" selectedKey="0">
+					<core:Item key="{selectRangeModel>value}" text="{selectRangeModel>name}" />
+				</Select>
+			</VBox>
+			<HBox class='ct-chart ct-octave chartInProcess'></HBox>
+	    </content>
+	</Panel>
+</core:FragmentDefinition>

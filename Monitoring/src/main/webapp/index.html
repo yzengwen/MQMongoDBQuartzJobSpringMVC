@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta charset="UTF-8">
+
+		<title>DataHubMonitor</title>
+
+		<script id="sap-ui-bootstrap"
+			src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+			data-sap-ui-libs="sap.m"
+			data-sap-ui-theme="sap_belize"
+			data-sap-ui-compatVersion="edge"
+			data-sap-ui-resourceroots='{"datahub-monitor": ""}'>
+		</script>
+
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<link rel="stylesheet" type="text/css" href="css/chartist.min.css">
+   		<script id="chartist" src="vendor/chartist.min.js"></script>
+		<script id="moment" src="vendor/moment/moment.js"></script>
+		<script src="vendor/cytoscape.min.js"></script>
+		<script>
+			sap.ui.getCore().attachInit(function() {
+				new sap.m.Shell('datahub-monitor-shell',{
+					app: new sap.ui.core.ComponentContainer({
+						height : "100%",
+						name : "datahub-monitor"
+					})
+				}).placeAt("content");
+			});
+		</script>
+	</head>
+
+	<body class="sapUiBody" id="content">
+	</body>
+
+</html>

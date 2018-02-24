@@ -1,0 +1,24 @@
+
+db.createCollection("Settings");
+db.Settings.insert({
+    "successEventDays" : 1,
+    "successEventHours" : 1,
+    "errorEventDays" : 1,
+    "errorEventHours" : 1,
+    "statisticalDays" : 1,
+    "statisticalHours" : 1,
+    "cleanStrategy" : true,
+    "threshold" : 85.4
+});
+
+db.createCollection("CronjobConfig");
+db.CronjobConfig.insert({
+    "frequencyHour" : 1,
+    "year" : 0,
+    "month" : 0,
+    "day" : 0,
+    "hour" : 0,
+    "minute" : 0,
+    "second" : 0,
+    "jobName" : "decay"
+});

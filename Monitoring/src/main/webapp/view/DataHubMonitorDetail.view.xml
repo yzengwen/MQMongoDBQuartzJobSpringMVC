@@ -1,0 +1,99 @@
+<mvc:View 
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:l="sap.ui.layout"
+	controllerName="datahub-monitor.controller.DataHubMonitorDetail">
+	<Page id="detailPage" title="DataHub Monitor">
+		<headerContent>
+				<Button icon="sap-icon://full-screen" press="hideMaster"></Button>
+		</headerContent>
+		<l:VerticalLayout class="sapUiSmallMargin" width="95%">
+			<Panel class="sapUiDemoFlexBoxSizeAdjustments">
+				<headerToolbar>
+					<Toolbar>
+						<Title level="H3" text="{i18n>MASTER_DETAIL_PAGE_TOOLBAR_TITLE}" />
+					</Toolbar>
+				</headerToolbar>
+				<FlexBox
+					alignItems="Start"
+					height="2rem">
+					<items>
+						<HBox alignItems="Center" width="30%">
+		                	<Label text="{i18n>SEARCH_CONDITION_IDOC}" />
+		                	<layoutData>
+								<FlexItemData growFactor="1" />
+							</layoutData>
+		            	</HBox>
+			            <HBox alignItems="Start" width="70%">
+			                <Text text="{= ${searchInputsModel>/idocNoFrom} ? ${searchInputsModel>/idocNoFrom}: ''}" />
+			                <Label text="To" class="sapUiMediumMarginBegin sapUiMediumMarginEnd" 
+			                	visible="{= ${searchInputsModel>/idocNoTo} ? true:false}"/>
+			                <Text text="{= ${searchInputsModel>/idocNoTo} ? ${searchInputsModel>/idocNoTo}: ''}" />
+			                <layoutData>
+								<FlexItemData growFactor="1" />
+							</layoutData>
+			            </HBox>
+			         </items>
+			     </FlexBox>
+			     <FlexBox
+					alignItems="Start"
+					height="2rem">
+					<items>
+			            <HBox alignItems="Center" width="30%">
+                			<Label text="{i18n>SEARCH_CONDITION_MESSAGE}" />
+                			<layoutData>
+								<FlexItemData growFactor="1" />
+							</layoutData>
+			            </HBox>
+		                <HBox alignItems="Start" width="70%">
+		                    <Text text="{= ${searchInputsModel>/msgTypeList} ? ${searchInputsModel>/msgTypeList}: ''}" />
+		                	<layoutData>
+								<FlexItemData growFactor="1" />
+							</layoutData>
+		                </HBox>
+		                </items>
+		          </FlexBox>
+		          <FlexBox
+					alignItems="Start"
+					height="2rem">
+					<items>
+		                <HBox alignItems="Center" width="30%">
+		                	<Label text="{i18n>SEARCH_CONDITION_STATUS}" />
+		                	<layoutData>
+								<FlexItemData growFactor="1" />
+							</layoutData>
+			            </HBox>
+	            		<HBox alignItems="Start" width="70%">
+		                    <Text text="{= ${searchInputsModel>/statusList} ? ${searchInputsModel>/statusList}: ''}" />
+		                	<layoutData>
+								<FlexItemData growFactor="1" />
+							</layoutData>
+		                </HBox>
+	                </items>
+                </FlexBox>
+                <FlexBox
+					alignItems="Start"
+					height="2rem">
+					<items>
+			            <HBox alignItems="Center" width="30%">
+			                <Label text="{i18n>SEARCH_CONDITION_TIME}" />
+			                <layoutData>
+								<FlexItemData growFactor="1" />
+							</layoutData>
+			            </HBox>
+			            <HBox alignItems="Start" width="70%">
+			                <Text text="{= ${searchInputsModel>/timeFrom} ? ${searchInputsModel>/timeFrom}: ''}" />
+			                <Label text="To" class="sapUiMediumMarginBegin sapUiMediumMarginEnd" 
+			                	visible="{= ${searchInputsModel>/timeTo} ? true:false}"/>
+			                <Text text="{= ${searchInputsModel>/timeTo} ? ${searchInputsModel>/timeTo}: ''}" />
+			                <layoutData>
+								<FlexItemData growFactor="1" />
+							</layoutData>
+			            </HBox>
+					</items>
+				</FlexBox>
+			</Panel>
+		</l:VerticalLayout>
+	</Page>
+</mvc:View>

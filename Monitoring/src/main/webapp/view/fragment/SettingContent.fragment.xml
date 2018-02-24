@@ -1,0 +1,97 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    	<l:FixFlex id="idSettingMsgStripLayout" width="100%" class="sapUiSmallMargin"></l:FixFlex>
+        <OverflowToolbar class="sapUiSmallMargin">
+        	<Title text="{i18n>SETTING_TOOLBAR_TITLE_1}" level="h3"/>
+        </OverflowToolbar>
+        <l:Grid defaultSpan="L4 M12 S12" class="sapUiSmallMargin">
+			<l:content>
+				<HBox alignItems="Center">
+					<Label text="{i18n>SETTING_LABEL_SUCCESS_EVENT}" />
+				</HBox>
+				<HBox alignItems="Center">
+		        	<StepInput
+						value="{settingModel>/success/days/value}"
+						min="{settingModel>/success/days/min}"
+						max="{settingModel>/success/days/max}"
+						width="6rem"
+						valueState="{settingModel>/success/days/valueState}"
+						step="{settingModel>/success/days/step}"
+						change="handleSettingEventInputCheck"/>
+					<Label text="Days" class="sapUiTinyMarginBegin sapUiTinyMarginEnd"/>
+				</HBox>
+				<HBox alignItems="Center">
+					<StepInput
+						value="{settingModel>/success/hours/value}"
+						min="{settingModel>/success/hours/min}"
+						max="{settingModel>/success/hours/max}"
+						width="6rem"
+						valueState="{settingModel>/success/hours/valueState}"
+						step="{settingModel>/success/hours/step}"
+						change="handleSettingEventInputCheck"/>
+					<Label text="Hours" class="sapUiTinyMarginBegin sapUiTinyMarginEnd"/>
+	        	</HBox>
+	        	
+				<HBox alignItems="Center">
+					<Label text="{i18n>SETTING_LABEL_ERROR_EVENT}" />
+				</HBox>
+				<HBox alignItems="Center">
+		        	<StepInput
+						value="{settingModel>/error/days/value}"
+						min="{settingModel>/error/days/min}"
+						max="{settingModel>/error/days/max}"
+						width="6rem"
+						valueState="{settingModel>/error/days/valueState}"
+						step="{settingModel>/error/days/step}"
+						change="handleSettingEventInputCheck"/>
+					<Label text="Days" class="sapUiTinyMarginBegin sapUiTinyMarginEnd"/>
+				</HBox>
+				<HBox alignItems="Center">
+					<StepInput
+						value="{settingModel>/error/hours/value}"
+						min="{settingModel>/error/hours/min}"
+						max="{settingModel>/error/hours/max}"
+						width="6rem"
+						valueState="{settingModel>/error/hours/valueState}"
+						step="{settingModel>/error/hours/step}"
+						change="handleSettingEventInputCheck"/>
+					<Label text="Hours" class="sapUiTinyMarginBegin sapUiTinyMarginEnd"/>
+	        	</HBox>
+			</l:content>
+		</l:Grid>
+		<OverflowToolbar class="sapUiSmallMargin">
+        	<Title text="{i18n>SETTING_TOOLBAR_TITLE_2}" level="h3"/>
+        </OverflowToolbar>
+        <l:Grid defaultSpan="L12 M12 S12" class="sapUiSmallMargin">
+			<l:content>
+		        <RadioButtonGroup groupName="cleanupGroupRadios" textDirection="RTL" buttons="{settingModel>/cleanup/}">
+					<RadioButton text="{settingModel>name}" selected="{settingModel>selected}" width="7rem" />
+				</RadioButtonGroup>
+			</l:content>
+		</l:Grid>
+		<OverflowToolbar class="sapUiSmallMargin">
+        	<Title text="{i18n>SETTING_TOOLBAR_TITLE_3}" level="h3"/>
+        </OverflowToolbar>
+        <l:Grid defaultSpan="L12 M12 S12" class="sapUiSmallMargin">
+			<l:content>
+		        <HBox alignItems="Center">
+					<Input id="idSettingThresholdInput" value="{settingModel>/threshold/value}" 
+							placeholder="Enter threshhold value..." showValueStateMessage="true" 
+							change="validateThresholdInput"/>
+					<Label text="%" class="sapUiTinyMarginBegin sapUiTinyMarginEnd"/>
+					<Label text="{i18n>SETTING_LABEL_THRESHOLD_MSG}" />
+				</HBox>
+			</l:content>
+		</l:Grid>
+		<l:Grid defaultSpan="L12 M12 S12" class="sapUiSmallMargin">
+			<l:content>
+		        <HBox alignItems="End" justifyContent="End">
+					<Button text="{i18n>SETTING_BUTTON_SAVE}" width="10rem" type="Emphasized" press="handleSettingSave" />
+				</HBox>
+			</l:content>
+		</l:Grid>
+</core:FragmentDefinition>

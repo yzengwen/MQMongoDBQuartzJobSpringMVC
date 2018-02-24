@@ -1,0 +1,81 @@
+<mvc:View height="100%" controllerName="datahub-monitor.controller.DocumentsList"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:l="sap.ui.layout"
+    xmlns:t="sap.ui.table"
+    xmlns:ui="sap.ui.commons"
+    xmlns:core="sap.ui.core"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns="sap.m">
+    <Page id="detailPage" title="DataHub Monitor" showNavButton="true" navButtonPress="onNavBack">
+		<headerContent>
+			<Button icon="sap-icon://home" press="homePage"></Button>
+			<Button icon="sap-icon://full-screen" press="hideMaster"></Button>
+		</headerContent>
+		<content>
+			<fb:FilterBar reset="onReset" search="handleDataSearch" showClearButton="true" showFilterConfiguration="false">
+				<fb:filterItems>
+					<fb:FilterItem name="documentId" label="{i18n>DOCUMENT_PAGE_FILTERBAR_LABEL1}">
+						<fb:control>
+							<Input
+								id="idDocumentIdInput"
+								width="15%"
+								type="Text"
+								placeholder="{i18n>DOCUMENT_PAGE_FILTERBAR_LABEL1_HOLDER}" />
+						</fb:control>				
+					</fb:FilterItem>
+				</fb:filterItems>
+	    	</fb:FilterBar>
+        	<t:Table id="idDocumentListTable"
+	        	visibleRowCount="10"
+	        	cellClick="goToDocumentDetail"
+	        	selectionMode="None"
+	        	class="sapUiSmallMarginTop sapUiSmallMarginBegin sapUiSmallMarginEnd datahubTreeTable"
+			    rows="{batchList>/Data}">
+	            <t:toolbar>
+	            	<Toolbar>
+	                    <Title text="{i18n>DOCUMENT_PAGE_TOOLBAR_TITLE1}"/>
+	                    <ToolbarSpacer/>
+	                </Toolbar>
+	            </t:toolbar>
+	            <t:columns>
+	                <t:Column 
+	                	id="idTableHeaderBatchPrimaryId"
+	                	sortProperty="batchPrimaryId">
+	                    <Label text="{i18n>DOCUMENT_PAGE_TABLE_HEADER_LABEL1}"/>
+	                    <t:template>
+	                        <Text text="{batchList>batchPrimaryId}"/>
+	                    </t:template>
+	                </t:Column>
+	                <t:Column>
+	                    <Label text="{i18n>DOCUMENT_PAGE_TABLE_HEADER_LABEL2}"/>
+	                    <t:template>
+	                        <ObjectStatus text="{batchList>status}" state="{ path: 'batchList>status', formatter: '.formatter.formatStatusToObjectState' }"/>
+	                    </t:template>
+	                </t:Column>
+	                <!-- <t:Column>
+	                    <Label text="{i18n>DOCUMENT_PAGE_TABLE_HEADER_LABEL3}"/>
+	                    <t:template>
+	                        <Text text="{batchList>errorMessage}"/>
+	                    </t:template>
+	                </t:Column> -->
+	                <t:Column 
+	                	sortProperty="createdTime">
+	                    <Label text="{i18n>DOCUMENT_PAGE_TABLE_HEADER_LABEL4}"/>
+	                    <t:template>
+	                        <Text text="{ path: 'batchList>createdTime', formatter: '.formatter.formatDate' }"/>
+	                    </t:template>
+	                </t:Column>
+	                <t:Column>
+	                    <Label text="{i18n>DOCUMENT_PAGE_TABLE_HEADER_LABEL5}"/>
+	                    <t:template>
+	                        <Text text="{batchList>poolName}"/>
+	                    </t:template>
+	                </t:Column>
+	            </t:columns>
+        	</t:Table>
+	        <Toolbar>
+	            <ui:Paginator id="idPaginator"></ui:Paginator>
+	        </Toolbar>
+    </content>
+    </Page>
+</mvc:View>

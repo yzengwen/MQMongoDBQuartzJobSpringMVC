@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mongo="http://www.springframework.org/schema/data/mongo" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:amq="http://activemq.apache.org/schema/core"
+    xmlns:jms="http://www.springframework.org/schema/jms" 
+    xmlns:util="http://www.springframework.org/schema/util" 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans   
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd   
+        http://www.springframework.org/schema/context   
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/data/mongo   
+        http://www.springframework.org/schema/data/mongo/spring-mongo-1.8.xsd
+        http://www.springframework.org/schema/jms
+        http://www.springframework.org/schema/jms/spring-jms-4.0.xsd
+        http://activemq.apache.org/schema/core
+        http://activemq.apache.org/schema/core/activemq-core-5.14.3.xsd 
+        http://www.springframework.org/schema/util 
+        http://www.springframework.org/schema/util/spring-util-4.0.xsd" >
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.sap.datahubmonitor" />
+	
+	<context:property-placeholder location="classpath:config.properties" />
+	<!-- <amq:connectionFactory id="amqConnectionFactory" brokerURL="tcp://192.168.3.3:61616" 
+		userName="admin" password="admin" /> -->
+
+	<bean id="amqConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="${amqUrl}" />
+		<property name="dispatchAsync" value="${dispatchAsync}" />
+    </bean>
+    
+    <bean id="connectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <property name="targetConnectionFactory" ref="amqConnectionFactory"></property>
+        <property name="sessionCacheSize" value="${sessionCacheSize}" />
+    </bean>
+    
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="pubSubDomain" value="false" />
+    </bean>
+    
+    <jms:listener-container destination-type="queue" container-type="default" connection-factory="connectionFactory" acknowledge="auto" error-handler="messageErrorHandler">
+        <jms:listener destination="${queueName}" ref="queueListenner"/>
+    </jms:listener-container>
+    
+    <bean id="queueListenner" class="com.sap.datahubmonitor.QueueMessageListenner" />
+    
+    <bean id="messageHandler" class="com.sap.datahubmonitor.service.DefaultMessageHandler">
+		<property name="finalStatusEvents">
+			<list>
+				<util:constant static-field="com.sap.datahubmonitor.constant.DatahubMonitorConstants.EVENT_ARCHIVED" />
+				<util:constant static-field="com.sap.datahubmonitor.constant.DatahubMonitorConstants.EVENT_NOT_PUBLISHED" />
+				<util:constant static-field="com.sap.datahubmonitor.constant.DatahubMonitorConstants.EVENT_CANONICAL_PUBLICATION" />
+				<util:constant static-field="com.sap.datahubmonitor.constant.DatahubMonitorConstants.EVENT_BATCHES_RECEIVED" />
+			</list>
+		</property>
+    </bean>
+    
+    <bean id="messageErrorHandler" class="com.sap.datahubmonitor.QueueMessageErrorHandler" />
+    
+    <mongo:db-factory id="mongoDbFactory"  
+		host="${mongo.host}"  
+		port="${mongo.port}"  
+		dbname="${mongo.dbname}"  
+		username="${mongo.username}"  
+		password="${mongo.password}"/>
+
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">    
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>    
+	</bean>
+    
+    <!-- <mongo:mongo host="127.0.0.1" port="27017"></mongo:mongo>
+
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg ref="mongo" />
+        <constructor-arg name="databaseName" value="xxlong_db" />
+    </bean> -->
+    <!-- <import resource="quartzContext.xml" />-->
+</beans>

@@ -1,0 +1,14 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:u="sap.ui.unified">
+	<ActionSheet
+		title="Choose Your Action"
+		showCancelButton="true"
+		placement="Bottom">
+		<buttons>
+			<Button text="Inbound" icon="sap-icon://inbox" press="changeBoundData"/>
+			<Button text="Outbound" icon="sap-icon://outbox" press="changeBoundData"/>
+		</buttons>
+	</ActionSheet>
+</core:FragmentDefinition>

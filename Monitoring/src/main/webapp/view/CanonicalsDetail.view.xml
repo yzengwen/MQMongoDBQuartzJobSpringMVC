@@ -1,0 +1,95 @@
+<mvc:View height="100%" controllerName="datahub-monitor.controller.CanonicalsDetail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:l="sap.ui.layout"
+    xmlns:t="sap.ui.table"
+    xmlns:ui="sap.ui.commons"
+    xmlns="sap.m">
+    <Page title="DataHub Monitor" showNavButton="true" navButtonPress="onNavBack" class="datahubSharedPage">
+    	<headerContent>
+    		<Button icon="sap-icon://home" press="homePage"></Button>
+			<Button icon="sap-icon://full-screen" press="hideMaster"></Button>
+		</headerContent>
+        <content>
+            <ObjectHeader responsive="true" title="{i18n>CANONICAL_PAGE_DETAIL_OBJECTHEADER_TITLE} {canonicalDetailModel>itemId}" 
+            	binding="{canonicalDetailModel>/Data}" fullScreenOptimized="true" backgroundDesign="Translucent"
+                number="{
+			        parts:[{path:'canonicalDetailModel>status'}],
+			        type: 'sap.ui.model.type.String'
+		          }"
+                numberState="{ path: 'canonicalDetailModel>status', formatter: '.formatter.formatStatusToObjectState' }">
+                <statuses>
+                	<ObjectStatus class="datahubObjectStatus" title="{i18n>CANONICAL_PAGE_DETAIL_OBJECTSTATUS1}" text="{= ${canonicalDetailModel>messageType} ? ${canonicalDetailModel>messageType} : 'None'}"/>
+                    <ObjectStatus class="datahubObjectStatus" title="{i18n>CANONICAL_PAGE_DETAIL_OBJECTSTATUS5}" text="{= ${canonicalDetailModel>traceId} ? ${canonicalDetailModel>traceId} : 'None'}"/>
+                    
+                    <ObjectStatus class="datahubObjectStatus" title="{i18n>CANONICAL_PAGE_DETAIL_OBJECTSTATUS2}" text="{= ${canonicalDetailModel>batchPrimaryId} ? ${canonicalDetailModel>batchPrimaryId} : 'None'}"/>
+                    <ObjectStatus class="datahubObjectStatus" title="{i18n>CANONICAL_PAGE_DETAIL_OBJECTSTATUS6}" text="{= ${canonicalDetailModel>itemType} ? ${canonicalDetailModel>itemType} : 'None'}"/>
+                    
+                    <ObjectStatus class="datahubObjectStatus" title="{i18n>CANONICAL_PAGE_DETAIL_OBJECTSTATUS3}" text="{= ${canonicalDetailModel>eventName} ? ${canonicalDetailModel>eventName} : 'None'}"/>
+                    <ObjectStatus class="datahubObjectStatus" title="{i18n>CANONICAL_PAGE_DETAIL_OBJECTSTATUS7}" text="{path: 'canonicalDetailModel>createdTime', formatter: '.formatter.formatDate' }"/>
+                    
+                    <ObjectStatus class="datahubObjectStatus" title="{i18n>CANONICAL_PAGE_DETAIL_OBJECTSTATUS4}" text="{= ${canonicalDetailModel>errorMessages/0} ? ${canonicalDetailModel>errorMessages/0} : 'None'}"/>
+                    <ObjectStatus class="datahubObjectStatus" title="{i18n>CANONICAL_PAGE_DETAIL_OBJECTSTATUS8}" text="{= ${canonicalDetailModel>poolName} ? ${canonicalDetailModel>poolName} : 'None'}"/>
+                </statuses>
+                <headerContainer>
+                    <IconTabBar class="sapUiResponsiveContentPadding">
+                        <items>
+                            <IconTabFilter text="{i18n>CANONICAL_PAGE_DETAIL_ICONTAB_TITLE}">
+                                <t:Table id="docItemsTable"
+	                                cellClick="goToTargetDetail"
+	                                selectionMode="None"
+	                                title="Target items ({canonicalDetailModel>/DataNum})"
+									class="sapUiMediumMarginTop datahubTreeTable"
+									rows="{path:'canonicalDetailModel>/Data/itemList', parameters: {arrayNames:['itemList']}}">
+                                    <t:columns>
+                                    	<t:Column>
+                                            <Label text="{i18n>CANONICAL_PAGE_DETAIL_TABLE_HEADER_LABEL1}"/>
+                                            <t:template>
+                                                <Text text="{canonicalDetailModel>exportCode}"/>
+                                            </t:template>
+                                        </t:Column>
+                                        <t:Column>
+                                            <Label text="{i18n>CANONICAL_PAGE_DETAIL_TABLE_HEADER_LABEL2}"/>
+                                            <t:template>
+                                                <Text text="{canonicalDetailModel>itemId}"/>
+                                            </t:template>
+                                        </t:Column>
+                                        <t:Column>
+                                            <Label text="{i18n>CANONICAL_PAGE_DETAIL_TABLE_HEADER_LABEL3}"/>
+                                            <t:template>
+                                                <Text text="{canonicalDetailModel>itemType}"/>
+                                            </t:template>
+                                        </t:Column>
+                                        <t:Column>
+                                            <Label text="{i18n>CANONICAL_PAGE_DETAIL_TABLE_HEADER_LABEL4}"/>
+                                            <t:template>
+                                                <Text text="{canonicalDetailModel>/Data/integrationKey}"/>
+                                            </t:template>
+                                        </t:Column>
+                                        <t:Column>
+                                            <Label text="{i18n>CANONICAL_PAGE_DETAIL_TABLE_HEADER_LABEL5}"/>
+                                            <t:template>
+                                                <Text text="{canonicalDetailModel>eventName}"/>
+                                            </t:template>
+                                        </t:Column>
+                                        <t:Column>
+                                            <Label text="{i18n>CANONICAL_PAGE_DETAIL_TABLE_HEADER_LABEL6}"/>
+                                            <t:template>
+                                                <Text text="{canonicalDetailModel>errorMessages/0}"/>
+                                            </t:template>
+                                        </t:Column>
+                                        <t:Column>
+                                            <Label text="{i18n>CANONICAL_PAGE_DETAIL_TABLE_HEADER_LABEL7}"/>
+                                            <t:template>
+                                                <Text text="{ path: 'canonicalDetailModel>createdTime', formatter: '.formatter.formatDate' }"/>
+                                            </t:template>
+                                        </t:Column>
+                                    </t:columns>
+                                </t:Table>
+                            </IconTabFilter>
+                        </items>
+                    </IconTabBar>
+                </headerContainer>
+            </ObjectHeader>
+        </content>
+    </Page>
+</mvc:View>

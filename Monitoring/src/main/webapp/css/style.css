@@ -1,0 +1,27 @@
+.datahubObjectStatus span {
+  position: relative;
+  display: block;
+}
+.datahubObjectStatus .sapMObjStatusText {
+  font-size: 18px;
+  padding-top: 7px;
+  word-break: break-word;
+}
+.datahubTreeTable:hover {
+  cursor: pointer;
+}
+.datahubTreeTable:hover span {
+  cursor: pointer;
+}
+
+#idIDocProcessFlow {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.treeNodeToolbar {
+	border: none !important;
+}

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:util="http://www.springframework.org/schema/util" 
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd  
+        http://www.springframework.org/schema/data/mongo 
+        http://www.springframework.org/schema/data/mongo/spring-mongo-1.8.xsd 
+        http://www.springframework.org/schema/util 
+        http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+	<!-- <import resource="classpath:cache.xml" /> -->
+
+	<context:property-placeholder location="classpath:config.properties" />
+	<mongo:db-factory id="mongoDbFactory" host="${mongo.host}"
+		port="${mongo.port}" dbname="${mongo.dbname}" username="${mongo.username}"
+		password="${mongo.password}" />
+
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+	</bean>
+	<bean id="dbConfigServiceImpl" class="com.sap.datahubmonitor.service.impl.DBConfigServiceImpl">
+		<property name="mongoTemplate" ref="mongoTemplate" />
+		<property name="decayCronjobfreqHours" value="1" />
+	</bean>
+    <import resource="quartzContext.xml" />
+    <!-- Setting page -->
+    <bean id="decayService" class="com.sap.datahubmonitor.service.impl.DecayServiceImpl">
+		<property name="dbConfigService" ref="dbConfigServiceImpl" />
+		<property name="decayHandler" ref="decayDeleteFirstAdapter" />
+	</bean>
+    <bean id="decayEasyArchiveAdapter" class="com.sap.datahubmonitor.decay.adpater.DecayEasyArchiveAdapter">
+		<property name="mongoTemplate" ref="mongoTemplate" />
+	</bean>
+    <bean id="decayDeleteFirstAdapter" class="com.sap.datahubmonitor.decay.adpater.DecayDeleteFirstAdapter">
+		<property name="mongoTemplate" ref="mongoTemplate" />
+		<property name="mongoDbName" value="${mongo.dbname}"/>
+		<property name="mongoHost" value="${mongo.host}"/>
+		<property name="mongoPort" value="${mongo.port}"/>
+		<property name="mongoUser" value="${mongo.username}"/>
+		<property name="mongoPass" value="${mongo.password}"/>
+		<property name="bulkLimit" value="${mongo.bulkLimit}"/>
+		<property name="outputFilePath" value="${mongo.dumppath}"/>
+	</bean>
+	<bean id="datahubMonitorService" class="com.sap.datahubmonitor.service.impl.DefaultDatahubMonitorService">
+		<property name="idocStatuses">
+			<list>
+				<util:constant static-field="com.sap.datahubmonitor.beans.StatusEnum.SUCCESS" />
+				<util:constant static-field="com.sap.datahubmonitor.beans.StatusEnum.PENDING_PUBLICATION" />
+				<util:constant static-field="com.sap.datahubmonitor.beans.StatusEnum.PARTIAL_ERROR" />
+				<util:constant static-field="com.sap.datahubmonitor.beans.StatusEnum.COMPLETE_FAILURE" />
+				<util:constant static-field="com.sap.datahubmonitor.beans.StatusEnum.SUPERCEDED" />
+			</list>
+		</property>
+	</bean>
+		
+</beans>

@@ -1,0 +1,60 @@
+<mvc:View height="100%" controllerName="datahub-monitor.controller.CanonicalsList"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:l="sap.ui.layout"
+    xmlns:t="sap.ui.table"
+    xmlns:ui="sap.ui.commons"
+    xmlns="sap.m">
+    <Page title="DataHub Monitor" showNavButton="true" navButtonPress="onNavBack" class="datahubSharedPage">
+        <headerContent>
+            <Button icon="sap-icon://home" press="homePage"></Button>
+            <Button icon="sap-icon://full-screen" press="hideMaster"></Button>
+        </headerContent>
+        <content>
+            <t:Table id="docItemsTable"
+                    cellClick="goToCanonicalDetail"
+                    selectionMode="None"
+                    title="{i18n>CANONICAL_PAGE_TABLE_TITLE} ({canonicalItemsModel>/DataNum})"
+					class="sapUiMediumMargin datahubTreeTable"
+					rows="{canonicalItemsModel>/Data}">
+                <t:columns>
+                    <t:Column>
+                        <Label text="{i18n>CANONICAL_PAGE_TABLE_HEADER_LABEL1}"/>
+                        <t:template>
+                            <Text text="{canonicalItemsModel>itemType}"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column>
+                        <Label text="{i18n>CANONICAL_PAGE_TABLE_HEADER_LABEL2}"/>
+                        <t:template>
+                            <Text text="{canonicalItemsModel>itemId}"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column>
+                        <Label text="{i18n>CANONICAL_PAGE_TABLE_HEADER_LABEL3}"/>
+                        <t:template>
+                            <Text text="{canonicalItemsModel>eventName}"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column>
+                        <Label text="{i18n>CANONICAL_PAGE_TABLE_HEADER_LABEL4}"/>
+                        <t:template>
+                            <Text text="{canonicalItemsModel>integrationKey}"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column>
+                        <Label text="{i18n>CANONICAL_PAGE_TABLE_HEADER_LABEL5}"/>
+                        <t:template>
+                            <Text text="{canonicalItemsModel>errorMessages/0}"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column>
+                        <Label text="{i18n>CANONICAL_PAGE_TABLE_HEADER_LABEL6}"/>
+                        <t:template>
+                            <Text text="{ path: 'canonicalItemsModel>createdTime', formatter: '.formatter.formatDate' }"/>
+                        </t:template>
+                    </t:Column>
+                </t:columns>
+            </t:Table>
+        </content>
+    </Page>
+</mvc:View>

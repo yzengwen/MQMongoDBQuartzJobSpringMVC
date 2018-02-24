@@ -1,0 +1,49 @@
+<mvc:View
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    controllerName="datahub-monitor.controller.Index" 
+    displayBlock="true" height="100%">
+	<Page id="indexPage" title="DataHub Monitor">
+		<!-- <customHeader>
+			<Toolbar>
+				<OverflowToolbarButton textDirection="LTR" text="Add" icon="sap-icon://menu" press="openMenuItemsPop"/>
+				<Title text="DataHub Monitor" textAlign="Center"/>
+			</Toolbar>
+		</customHeader> -->
+		<headerContent>
+			<OverflowToolbarButton textDirection="LTR" text="Add" icon="sap-icon://menu" press="openMenuItemsPop"/>
+		</headerContent>
+    	<IconTabBar
+			id="idInboundIconTabBar"
+			select="handleIconTabBarSelect"
+			expandable="false"
+			headerBackgroundDesign="Transparent"
+			backgroundDesign="Solid"
+			class="sapUiResponsiveContentPadding">
+	        <items>
+	        	<IconTabFilter
+					icon="sap-icon://business-objects-experience"
+					text="{i18n>ICON_TAB_FILTER_TITLE_1}"
+					iconColor="Positive">
+					<core:Fragment type="XML" fragmentName="datahub-monitor.view.fragment.AnalyseGraph"/>
+	            </IconTabFilter>
+	        	<IconTabFilter
+					icon="sap-icon://detail-view"
+					text="{i18n>ICON_TAB_FILTER_TITLE_2}"
+					iconColor="Critical"
+					backgroundDesign="Transparent">
+					<core:Fragment type="XML" fragmentName="datahub-monitor.view.fragment.SearchCondition"/>
+					<!-- <Button press="navToMasterDetail" text="Press"/> -->
+				</IconTabFilter>
+				<IconTabFilter
+					icon="sap-icon://action-settings"
+					text="{i18n>ICON_TAB_FILTER_TITLE_3}"
+					iconColor="Default"
+					backgroundDesign="Transparent">
+					<core:Fragment type="XML" fragmentName="datahub-monitor.view.fragment.SettingContent"/>
+				</IconTabFilter>
+	        </items>
+    	</IconTabBar>
+    </Page>
+</mvc:View>

@@ -1,0 +1,82 @@
+<core:FragmentDefinition
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:t="sap.ui.table"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:layout="sap.ui.layout"
+    xmlns:core="sap.ui.core">
+    <t:Table id="idInOutboundTable"
+		selectionMode="None"
+		rows="{boundDataModel>/Data}"
+		visibleRowCount="10"
+		ariaLabelledBy="title"
+		cellClick="goToDocumentsList"
+		class="sapUiSmallMarginTop datahubTreeTable">
+        <t:toolbar>
+            <Toolbar>
+                <Title text="IDoc Type List ({boundDataModel>/DataNum})" />
+                <ToolbarSpacer/>
+                <SearchField liveChange="onSearch" width="30%" placeholder="Enter idoc type name..."/>
+            </Toolbar>
+        </t:toolbar>
+        <t:columns>
+            <t:Column>
+                <Label text="IDoc Type" />
+                <t:template>
+                    <Text text="{boundDataModel>type}"/>
+                </t:template>
+            </t:Column>
+            <t:Column>
+                <Label text="Total Number" />
+                <t:template>
+                    <Text text="{boundDataModel>total}"/>
+                </t:template>
+            </t:Column>
+            <t:Column>
+                <Label text="Success" />
+                <t:template>
+                    <Text text="{boundDataModel>stateStatistics/SuccessNum}"/>
+                </t:template>
+            </t:Column>
+            <t:Column>
+                <Label text="Error" />
+                <t:template>
+                    <Text text="{boundDataModel>stateStatistics/ErrorNum}"/>
+                </t:template>
+            </t:Column>
+            <t:Column>
+                <Label text="Pending Publication" />
+                <t:template>
+                    <Text text="{boundDataModel>stateStatistics/PENDING_PUBLICATION}"/>
+                </t:template>
+            </t:Column>
+            <t:Column>
+                <Label text="Partial Error" />
+                <t:template>
+                    <Text text="{boundDataModel>stateStatistics/PARTIAL_ERROR}"/>
+                </t:template>
+            </t:Column>
+            <t:Column>
+                <Label text="Complete Failure" />
+                <t:template>
+                    <Text text="{boundDataModel>stateStatistics/COMPLETE_FAILURE}"/>
+                </t:template>
+            </t:Column>
+            <t:Column>
+                <Label text="Superceded" />
+                <t:template>
+                    <Text text="{boundDataModel>SUPERCEDED}"/>
+                </t:template>
+            </t:Column>
+            <t:Column>
+                <Label text="Deleted" />
+                <t:template>
+                    <Text text="{boundDataModel>DELETED}"/>
+                </t:template>
+            </t:Column>
+        </t:columns>
+    </t:Table>
+</core:FragmentDefinition>

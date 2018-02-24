@@ -1,0 +1,124 @@
+<mvc:View
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:t="sap.ui.table"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+	controllerName="datahub-monitor.controller.TargetDetail"
+    xmlns:html="http://www.w3.org/1999/xhtml">
+    <Page title="DataHub Monitor" showNavButton="true" navButtonPress="onNavBack" class="datahubSharedPage">
+    	<headerContent>
+			<Button icon="sap-icon://home" press="homePage"></Button>
+			<Button icon="sap-icon://full-screen" press="hideMaster"></Button>
+		</headerContent>
+        <content>
+             <!-- <f:Form id="FormDisplay354"
+				minWidth="1024"
+				maxContainerCols="2"
+				editable="false"
+				class="isReadonly">
+				<f:title>
+					<core:Title text="Address" />
+				</f:title>
+				<f:layout>
+					<f:ResponsiveGridLayout
+						labelSpanL="3"
+						labelSpanM="3"
+						emptySpanL="4"
+						emptySpanM="4"
+						columnsL="1"
+						columnsM="1" />
+				</f:layout>
+				<f:formContainers>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement label="Document Id">
+								<f:fields>
+									<Text text="{targetDetailModel>/batchPrimaryId}"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Canonical Id">
+								<f:fields>
+									<Text text="{targetDetailModel>/canonicalItemId}"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Status">
+								<f:fields>
+									<Text text="{targetDetailModel>/status}"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Created Time">
+								<f:fields>
+									<Text text="{targetDetailModel>/createdTime}"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Event Name">
+								<f:fields>
+									<Text text="{targetDetailModel>/eventName}"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Target Type">
+								<f:fields>
+									<Text text="{targetDetailModel>/itemType}"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Message Source">
+								<f:fields>
+									<Text text="{targetDetailModel>/messageSource}"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Message Type">
+								<f:fields>
+									<Text text="{targetDetailModel>/messageType}"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Pool Name">
+								<f:fields>
+									<Text text="{targetDetailModel>/poolName}"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Trace Id">
+								<f:fields>
+									<Text text="{targetDetailModel>/traceId}"/>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+			</f:Form> -->
+			<List
+				headerText="{i18n>TARGET_PAGE_LIST_TITLE}">
+				<InputListItem label="{i18n>TARGET_PAGE_LIST_INPUT_LABEL1}">
+					<Text text="{targetDetailModel>/integrationKey}"/>
+				</InputListItem>
+				<InputListItem label="{i18n>TARGET_PAGE_LIST_INPUT_LABEL2}">
+					<Text text="{targetDetailModel>/batchPrimaryId}"/>
+				</InputListItem>
+				<InputListItem label="{i18n>TARGET_PAGE_LIST_INPUT_LABEL3}">
+					<Text text="{targetDetailModel>/canonicalItemId}"/>
+				</InputListItem>
+				<InputListItem label="{i18n>TARGET_PAGE_LIST_INPUT_LABEL5}">
+					<Text text="{path: 'targetDetailModel>/createdTime', formatter:'.formatter.formatDate'}"/>
+				</InputListItem>
+				<InputListItem label="{i18n>TARGET_PAGE_LIST_INPUT_LABEL6}">
+					<Text text="{targetDetailModel>/eventName}"/>
+				</InputListItem>
+				<InputListItem label="{i18n>TARGET_PAGE_LIST_INPUT_LABEL7}">
+					<Text text="{targetDetailModel>/itemType}"/>
+				</InputListItem>
+				<InputListItem label="{i18n>TARGET_PAGE_LIST_INPUT_LABEL8}">
+					<Text text="{targetDetailModel>/messageType}"/>
+				</InputListItem>
+				<InputListItem label="{i18n>TARGET_PAGE_LIST_INPUT_LABEL9}">
+					<Text text="{targetDetailModel>/poolName}"/>
+				</InputListItem>
+				<InputListItem label="{i18n>TARGET_PAGE_LIST_INPUT_LABEL10}">
+					<Text text="{targetDetailModel>/traceId}"/>
+				</InputListItem>
+				<InputListItem label="{i18n>TARGET_PAGE_LIST_INPUT_LABEL11}">
+					<Text text="{targetDetailModel>/exportCode}"/>
+				</InputListItem>
+			</List>
+        </content>
+    </Page>
+</mvc:View>

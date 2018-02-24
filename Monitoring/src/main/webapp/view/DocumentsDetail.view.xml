@@ -1,0 +1,83 @@
+<mvc:View height="100%" controllerName="datahub-monitor.controller.DocumentsDetail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:l="sap.ui.layout"
+    xmlns:t="sap.ui.table"
+    xmlns:ui="sap.ui.commons"
+    xmlns="sap.m">
+    <Page title="DataHub Monitor" showNavButton="true" navButtonPress="onNavBack" class="datahubSharedPage">
+    	<headerContent>
+    		<Button icon="sap-icon://home" press="homePage"></Button>
+			<Button icon="sap-icon://full-screen" press="hideMaster"></Button>
+		</headerContent>
+        <content>
+            <ObjectHeader responsive="true" title="{i18n>DOCUMENT_PAGE_OBJECTHEADER_TITLE} {documentsDetailModel>batchPrimaryId}" binding="{documentsDetailModel>/Data}" fullScreenOptimized="true" backgroundDesign="Translucent"
+                  number="{
+			        parts:[{path:'documentsDetailModel>status'}],
+			        type: 'sap.ui.model.type.String'
+		          }"
+                  numberState="{ path: 'documentsDetailModel>status', formatter: '.formatter.formatStatusToObjectState' }">
+                <statuses>
+                	<ObjectStatus class="datahubObjectStatus" title="{i18n>DOCUMENT_PAGE_OBJECTSTATUS1}" text="{= ${documentsDetailModel>messageType} ? ${documentsDetailModel>messageType} : 'None'}"/>
+                    <ObjectStatus class="datahubObjectStatus" title="{i18n>DOCUMENT_PAGE_OBJECTSTATUS2}" text="{path: 'documentsDetailModel>createdTime', formatter: '.formatter.formatDate' }"/>
+                    <ObjectStatus class="datahubObjectStatus" title="{i18n>DOCUMENT_PAGE_OBJECTSTATUS4}" text="{= ${documentsDetailModel>poolName} ? ${documentsDetailModel>poolName} : 'None'}"/>
+                    <!-- <ObjectStatus class="datahubObjectStatus" title="{i18n>DOCUMENT_PAGE_OBJECTSTATUS3}" text="{= ${documentsDetailModel>exception} ? ${documentsDetailModel>exception} : 'None'}"/> -->
+                    <ObjectStatus class="datahubObjectStatus" title="" text=""/>
+                </statuses>
+                <headerContainer>
+                    <IconTabBar class="sapUiResponsiveContentPadding">
+                        <items>
+                            <IconTabFilter text="{i18n>DOCUMENT_PAGE_ICONTAB_TITLE}">
+                                <t:Table id="documentsDetailTable"
+	                                cellClick="goToCanonicalsList"
+	                                selectionMode="None"
+									class="sapUiMediumMarginTop datahubTreeTable"
+									rows="{documentsDetailModel>/Data/itemList}">
+									<t:toolbar>
+		                                <Toolbar>
+		                                	<Title text="{i18n>DOCUMENT_PAGE_TOOLBAR_TITLE2} ({documentsDetailModel>/DataNum})"/>
+		                                    <ToolbarSpacer/>
+		                                    <!-- <Button press="onOpenFlowDialog" icon="sap-icon://step"/> -->
+		                                </Toolbar>
+		                            </t:toolbar>
+                                    <t:columns>
+                                    	<t:Column>
+                                            <Label text="{i18n>DOCUMENT_PAGE_CANONICAL_TABLE_HEADER_LABEL1}"/>
+                                            <t:template>
+                                                <Text text="{documentsDetailModel>itemType}"/>
+                                            </t:template>
+                                        </t:Column>
+                                        <t:Column>
+                                            <Label text="{i18n>DOCUMENT_PAGE_CANONICAL_TABLE_HEADER_LABEL2}"/>
+                                            <t:template>
+                                                <Text text="{documentsDetailModel>itemId}"/>
+                                            </t:template>
+                                        </t:Column>
+                                        <t:Column>
+                                            <Label text="{i18n>DOCUMENT_PAGE_CANONICAL_TABLE_HEADER_LABEL3}"/>
+                                            <t:template>
+                                                <ObjectStatus text="{documentsDetailModel>status}" 
+                                                	state="{ path: 'documentsDetailModel>status', formatter: '.formatter.formatStatusToObjectState' }"/>
+                                            </t:template>
+                                        </t:Column>
+                                        <t:Column>
+						                    <Label text="{i18n>DOCUMENT_PAGE_TABLE_HEADER_LABEL3}"/>
+						                    <t:template>
+						                        <Text text="{documentsDetailModel>errorMessages/0}"/>
+						                    </t:template>
+					                	</t:Column>
+                                        <t:Column>
+                                            <Label text="{i18n>DOCUMENT_PAGE_CANONICAL_TABLE_HEADER_LABEL4}"/>
+                                            <t:template>
+                                                <Text text="{ path: 'documentsDetailModel>createdTime', formatter: '.formatter.formatDate' }"/>
+                                            </t:template>
+                                        </t:Column>
+                                    </t:columns>
+                                </t:Table>
+                            </IconTabFilter>
+                        </items>
+                    </IconTabBar>
+                </headerContainer>
+            </ObjectHeader>
+        </content>
+    </Page>
+</mvc:View>

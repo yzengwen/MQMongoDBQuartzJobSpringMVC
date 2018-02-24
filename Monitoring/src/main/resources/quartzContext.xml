@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+	<context:component-scan base-package="com.sap.datahubmonitor.cronjobs" />
+
+<!-- 	<bean id="clearDataJobBean" class="com.sap.datahubmonitor.cronjob.ClearDataJobBean">
+		<property name="enable" value="false" />
+	</bean> -->
+	<bean id="decayDataJobBean" class="com.sap.datahubmonitor.cronjob.DecayJobBean">
+		<property name="enable" value="true" />
+		<property name="decayService" ref="decayService" />
+	</bean>
+
+	<!-- For times when you just need to invoke a method on a specific object -->
+	<bean id="clearDataJobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="decayDataJobBean" />
+		<property name="targetMethod" value="clearData" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<!-- TestJob: Run the job on the first day of each month -->
+	<bean id="cronTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearDataJobDetail" />
+		<property name="cronExpression" value="*/5 * * * * ?" />
+	</bean>
+	<!-- Run the job every hour -->
+	<bean id="decaySimpleTrigger"
+		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="repeatInterval" value="3600000" />
+		<!--<property name="repeatInterval" 
+		  value="#{dbConfigServiceImpl.decayCronjobfreqHours}" />--><!-- 1 hour: 60L * 60L * 1000L -->
+		<property name="jobDetail" ref="clearDataJobDetail" />
+	</bean>
+	<!-- delete if not used later -->
+	<bean id="decayCronTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearDataJobDetail" />
+		<property name="cronExpression" value="0 0/5 * * * ?" /><!-- every 5 mins -->
+	</bean>
+
+	<!-- Scheduler factory bean to glue together jobDetails and triggers to 
+		Configure Quartz Scheduler -->
+	<bean id="schedulerFactoryBean"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="autoStartup">
+			<value>true</value>
+		</property>
+		<property name="jobDetails">
+			<list>
+				<ref bean="clearDataJobDetail" />
+			</list>
+		</property>
+
+		<property name="triggers">
+			<list>
+				<!-- <ref bean="cronTrigger" /> -->
+				<!-- <ref bean="decayCronTrigger" /> -->
+				<ref bean="decaySimpleTrigger" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="decayCronTriggerManager"
+		class="com.sap.datahubmonitor.cronjob.quartz.DecayCronTriggerManager">
+		<property name="schedulerFactoryBean" ref="schedulerFactoryBean" />
+		<property name="dbConfigService" ref="dbConfigServiceImpl" />
+	</bean>
+
+</beans>

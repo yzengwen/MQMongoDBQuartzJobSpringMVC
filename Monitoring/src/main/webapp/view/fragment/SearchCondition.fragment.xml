@@ -1,0 +1,103 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <l:FixFlex id="idSearchMsgStripLayout" width="100%" class="sapUiSmallMargin"></l:FixFlex>
+    <OverflowToolbar class="sapUiSmallMargin">
+        <Title text="{i18n>SEARCH_TOOLBAR_TITLE}" level="h3"/>
+    </OverflowToolbar>
+    <l:Grid id="idSearchConditions" defaultSpan="L6 M12 S12" class="sapUiSmallMargin">
+        <l:content>
+            <HBox alignItems="Center">
+                <Label text="{i18n>SEARCH_CONDITION_IDOC}" />
+            </HBox>
+            <HBox alignItems="Center">
+                <Input id="idIdocNumFrom" width="15rem" 
+                		value="{searchInputsModel>/idocNoFrom}" 
+                		change="handleSearchIDocCheck"/>
+                <Label text="{i18n>SEARCH_CONDITION_LABEL_TO}" class="sapUiMediumMarginBegin sapUiMediumMarginEnd" visible="{searchInputsModel>/rangeSelected}"/>
+                <Input id="idIdocNumTo" width="15rem" 
+                		value="{searchInputsModel>/idocNoTo}" 
+                		visible="{searchInputsModel>/rangeSelected}" 
+                		change="handleSearchIDocCheck"/>
+            </HBox>
+            <HBox alignItems="Center">
+            </HBox>
+            <HBox alignItems="Center">
+                <CheckBox id="idCheckboxSingle" text="{i18n>SEARCH_CONDITION_CHECKBOX_SINGLE}" select="handleSearchIdocCheckbox" 
+                	selected="{searchInputsModel>/singleSelected}" class="sapUiMediumMarginEnd" />
+                <CheckBox id="idCheckboxRange" text="{i18n>SEARCH_CONDITION_CHECKBOX_RANGE}" select="handleSearchIdocCheckbox" 
+                	selected="{searchInputsModel>/rangeSelected}" />
+            </HBox>
+            <HBox alignItems="Center">
+                <Label text="{i18n>SEARCH_CONDITION_MESSAGE}" />
+            </HBox>
+            <VBox id="idMsgTypeVBox">
+                <HBox alignItems="Center">
+                    <Select
+							width="15rem"
+							forceSelection="false"
+							selectedKey="{searchInputsModel>/msgTypeList/0}"
+							items="{
+								path: 'searchModel>/messageType'
+							}">
+                        <core:Item key="{searchModel>type}" text="{searchModel>type}" />
+                    </Select>
+                    <Button icon="sap-icon://add" type="Transparent" press="addNewMsgTypeSelect" 
+		        		class="sapUiMediumMarginBegin sapUiMediumMarginEnd"/>
+                </HBox>
+            </VBox>
+            <HBox alignItems="Center">
+                <Label text="{i18n>SEARCH_CONDITION_STATUS}" />
+            </HBox>
+            <VBox id="idStatusVBox">
+                <HBox alignItems="Center">
+                    <Select
+							width="15rem"
+							forceSelection="false"
+							selectedKey="{searchInputsModel>/statusList/0}"
+							items="{
+								path: 'searchModel>/statusList'
+							}">
+                        <core:Item key="{searchModel>status}" text="{searchModel>status}" />
+                    </Select>
+                    <Button id="statusadd-0" icon="sap-icon://add" type="Transparent" press="addNewStatusSelect"
+		        			class="sapUiMediumMarginBegin sapUiMediumMarginEnd"/>
+                </HBox>
+            </VBox>
+            <HBox alignItems="Center">
+                <Label text="{i18n>SEARCH_CONDITION_TIME}" />
+            </HBox>
+            <HBox alignItems="Center">
+                <DateTimePicker
+						id="timeFrom"
+						placeholder="Enter Date ..."
+						width="15rem"
+						change="handleDateTimeCheck"
+						value="{path:'searchInputsModel>/timeFrom', 
+								type:'sap.ui.model.type.DateTime', 
+								formatOptions: { style: 'medium', strictParsing: true}}"/>
+                <Label text="{i18n>SEARCH_CONDITION_LABEL_TO}" class="sapUiMediumMarginBegin sapUiMediumMarginEnd"/>
+                <DateTimePicker
+						id="timeTo"
+						placeholder="Enter Date ..."
+						width="15rem"
+						change="handleDateTimeCheck"
+						value="{path:'searchInputsModel>/timeTo', 
+								type:'sap.ui.model.type.DateTime', 
+								formatOptions: { style: 'medium', strictParsing: true}}"/>
+
+            </HBox>
+        </l:content>
+    </l:Grid>
+    <l:Grid defaultSpan="L12 M12 S12" class="sapUiSmallMargin">
+        <l:content>
+            <HBox alignItems="End" justifyContent="End">
+                <Button text="{i18n>SEARCH_CONDITION_BUTTON_RESET}" width="10rem" type="Default" press="handleResetSearch" class="sapUiSmallMarginEnd"/>
+                <Button text="{i18n>SEARCH_CONDITION_BUTTON_SEARCH}" width="10rem" type="Emphasized" press="handleSubmitSearch" />
+            </HBox>
+        </l:content>
+    </l:Grid>
+</core:FragmentDefinition>

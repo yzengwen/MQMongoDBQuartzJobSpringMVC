@@ -1,0 +1,64 @@
+<mvc:View 
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.m"
+	xmlns:t="sap.ui.table"
+	xmlns:u="sap.ui.unified"
+	controllerName="datahub-monitor.controller.DataHubMonitorMaster" 
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	displayBlock="true">
+	<Page id="masterPage">
+		<customHeader>
+			<Toolbar>
+				<OverflowToolbarButton textDirection="LTR" text="Add" icon="sap-icon://nav-back" press="navToIndexPage"/>
+				<ToolbarSpacer/>
+				<Title id="idMasterPageTitle" text="{= ${treeNodesModel>/DataNum} ? ${treeNodesModel>/Title} + ' (' + ${treeNodesModel>/DataNum} + ')' : ${treeNodesModel>/Title} + ' (0)'}"/>
+				<ToolbarSpacer/>
+			</Toolbar>
+		</customHeader>
+		<subHeader>
+			<Toolbar id="searchToolbar" design="Solid">
+				<SearchField  
+					search="handleTreeNodeSearch" 
+					width="100%" 
+					showRefreshButton="true"/>
+			</Toolbar>
+		</subHeader>
+		<content>
+			<t:TreeTable id="idNodeTree"
+	        	cellClick="treeNodePress"
+	        	toggleOpenState="handleExpandTreeNodes"
+	        	selectionMode="None"
+	        	columnHeaderVisible="false"
+	        	class="datahubTreeTable"
+	        	visibleRowCountMode="Auto"
+			    rows="{path:'treeNodesModel>/Data', parameters: {arrayNames:['nodes']}}">
+	            <t:columns>
+	                <t:Column>
+	                	<t:template>
+	                		<Toolbar width="100%" class="treeNodeToolbar" height="auto">
+	                			<core:Icon src="{treeNodesModel>ref}"/>
+	                			<Text text="{treeNodesModel>text}" />
+	                			<ToolbarSpacer/>
+	                			<core:Icon src="{= ${treeNodesModel>statusColor} ? 'sap-icon://circle-task-2' : '' }" 
+                   					color="{= ${treeNodesModel>statusColor} ? ${treeNodesModel>statusColor} : '' }" 
+                   					class="sapUiSmallMarginBegin"
+                   					alt="{treeNodesModel>status}"
+                   					press="handeStatusIconPress"/>
+	                    		<Text text="{treeNodesModel>itemNum}" textAlign="End"
+	                    			visible="{ parts:[{path: 'treeNodesModel>itemNum'},{path: 'treeNodesModel>ref'}], 
+	                    					  formatter: '.formatter.formatTreeTotal'}"/>
+	                		</Toolbar>
+	                	</t:template>
+	                </t:Column>
+	          	</t:columns>
+	        </t:TreeTable>
+		</content>
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Button text="Collapse all" press="handleCollapseAllTreeNodes"/>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>
