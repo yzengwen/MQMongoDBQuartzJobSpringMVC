@@ -51,7 +51,7 @@ public class DefaultMessageHandler implements MessageHandler{
 						mongoService.save(dbObject, Configurations.getProperty(DatahubMonitorConstants.TABLE_FINALSTATUS));
 					}
 					else {
-						mongoService.save(dbObject, "Test-collection");
+						mongoService.save(dbObject, "testcol");
 						if(logger.isDebugEnabled()){
 //							logger.debug("Message ignored: " + dbObject.toString());
 							logger.debug("--------------------------------------------------------------------one test record");
@@ -66,7 +66,7 @@ public class DefaultMessageHandler implements MessageHandler{
 			}
 		}
 		else {
-			mongoService.save(dbObject, "Test-collection");
+			mongoService.save(dbObject, "testcol");
 			if(logger.isDebugEnabled()){
 				logger.debug("--------------------------------------------------------------------one test record");
 //				logger.debug("Message ignored, no poolName field found: " + dbObject.toString());
